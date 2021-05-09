@@ -19,7 +19,7 @@ export class MyPostsComponent implements OnInit {
   Friends_Posts = [];
   loggedin_user = null;
   myProfile = {
-    username: null
+    username: "..."
   };
   totalFriends = 0;
   
@@ -42,6 +42,12 @@ export class MyPostsComponent implements OnInit {
     this.getFriendsPosts();
     this.getMyProfile();
     this.totalFriendsCount();
+  }
+
+  logoutUser()
+  { 
+    this.cookieService.delete("test_loggedin_user");
+    this.router.navigate(['/login']);
   }
 
   navigateFriends()
