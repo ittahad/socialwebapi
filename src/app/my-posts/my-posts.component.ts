@@ -15,10 +15,12 @@ import { ProfileService } from '../services/profile.service';
 export class MyPostsComponent implements OnInit {
 
   postForm: FormGroup;
-  My_Posts = null;
-  Friends_Posts = null;
+  My_Posts = [];
+  Friends_Posts = [];
   loggedin_user = null;
-  myProfile = null;
+  myProfile = {
+    username: null
+  };
   totalFriends = 0;
   
   @ViewChild("postFormDirective") postFormDirective;

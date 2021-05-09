@@ -1,5 +1,6 @@
       <div style="text-align:center; margin-top:50px">
-        <div fxLayout="row" fxLayout.xs="column" fxFlexFill fxLayoutAlign="center center">
+        <p style="color: rgb(177, 152, 152);">Login with just the username</p>
+        <div fxLayout="row" fxLayout.xs="column" fxFlexFill fxLayoutAlign="center center" style="margin-top: 100px">
           <form novalidate [formGroup]="loginForm" (ngSubmit)="onSubmit()" #loginFormDirective="ngForm">
             <div>
               <div>
@@ -10,15 +11,15 @@
               </div>
             </div>
     
-            <div class="ro">
-              <div class="col-md-10">
+            <div class="row">
+              <div class="col-md-12">
                 <button mat-flat-button type="submit" color="primary"
                   [disabled]="loginForm.invalid">
                   Login</button>
               </div>
             </div>
 
-            <br />
+            <br/>
             <div class="clearfix"></div>
 
 
