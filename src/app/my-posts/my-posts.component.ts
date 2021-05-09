@@ -2,8 +2,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { FriendService } from '../services/friend.service';
 import { LoginService } from '../services/login.service';
 import { PostService } from '../services/post.service';
+import { ProfileService } from '../services/profile.service';
 
 @Component({
   selector: 'app-my-posts',
@@ -13,8 +15,11 @@ import { PostService } from '../services/post.service';
 export class MyPostsComponent implements OnInit {
 
   postForm: FormGroup;
-  My_Posts = [];
-  Friends_Posts = [];
+  My_Posts = null;
+  Friends_Posts = null;
+  loggedin_user = null;
+  myProfile = null;
+  totalFriends = 0;
   
   @ViewChild("postFormDirective") postFormDirective;
 
@@ -22,13 +27,38 @@ export class MyPostsComponent implements OnInit {
     private cookieService: CookieService,
     private router: Router,
     private loginService: LoginService,
-    private postService: PostService) { 
+    private postService: PostService,
+    private profileService: ProfileService,
+    private friendService: FriendService) { 
     this.createForm();
   }
 
   ngOnInit(): void {
+    var userId = this.cookieService.get("test_loggedin_user");
+    this.loggedin_user = userId;
     this.getMyPosts();
     this.getFriendsPosts();
+    this.getMyProfile();
+    this.totalFriendsCount();
+  }
+
+  navigateFriends()
+  {
+    this.router.navigate(['/friends']);
+  }
+
+  totalFriendsCount()
+  { 
+    var userId = this.cookieService.get("test_loggedin_user");
+
+    let payload = {
+      myId: userId
+    };
+
+    this.friendService.getFriends(payload)
+      .subscribe(res => {
+        this.totalFriends = res.response.length;
+      })
   }
 
   onSubmitPost(): void {
@@ -81,6 +111,18 @@ export class MyPostsComponent implements OnInit {
     .subscribe(res => {
       console.log(res);
       this.Friends_Posts = res.response;
+    }, err => {
+      console.log(err);
+    })
+  }
+
+  getMyProfile() {
+    var userId = this.cookieService.get("test_loggedin_user");
+
+    this.profileService.getMyProfile(userId)
+    .subscribe(res => {
+      console.log(res);
+      this.myProfile = res.response[0];
     }, err => {
       console.log(err);
     })

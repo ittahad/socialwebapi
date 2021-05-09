@@ -16,6 +16,7 @@ export class FriendsComponent implements OnInit {
   postForm: FormGroup;
   My_Friends = [];
   Not_My_Friends = [];
+  loggedin_user = null;
   
   @ViewChild("postFormDirective") postFormDirective;
 
@@ -29,6 +30,8 @@ export class FriendsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    var userId = this.cookieService.get("test_loggedin_user");
+    this.loggedin_user = userId;
     this.getMyFriends();
     this.getFriendSuggestions();
   }
@@ -92,6 +95,11 @@ export class FriendsComponent implements OnInit {
     }, err => {
       console.log(err);
     })
+  }
+
+  navigateHome()
+  { 
+    this.router.navigate(['/home']);
   }
 
   sendRequestAction(friend: any)

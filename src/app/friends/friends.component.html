@@ -1,9 +1,19 @@
 
+<p>
+    <mat-toolbar color="primary">
+      <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon" 
+      (click)="navigateHome()"> Home </button>
+      <span class="example-spacer"></span>
+      <span style="font-size: 15px"> Logged in: {{loggedin_user}} </span>
+    </mat-toolbar>
+  </p>
+
 <div class="container" style="margin-top:50px">
     <div class="row">
         <div class="col-md-6">
             <span style="margin-left: 5px;"> My Friends </span>
-            <div>
+            <div style="margin-top: 20px">
+              <p *ngIf="My_Friends === null || My_Friends.length <= 0" style="text-align: center"> No friends found </p>
               <div *ngFor="let friend of My_Friends" style="border: 1px solid rgb(207, 207, 207); padding: 10px; margin: 5px">
                 <div>
                   <p> {{friend.displayName}} <button mat-button color="warn" style="float: right"
@@ -14,8 +24,9 @@
           </div>
     
           <div class="col-md-6">
-            <span style="margin-left: 5px;"> Friends Suggestions </span>
-            <div>
+            <p style="margin-left: 5px; text-align: right"> Friends Suggestions </p>
+            <div style="margin-top: 20px">
+              <p *ngIf="Not_My_Friends === null || Not_My_Friends.length <= 0" style="text-align: center; color: orange"> No suggestion found </p>
               <div *ngFor="let notfriend of Not_My_Friends" style="border: 1px solid rgb(207, 207, 207); padding: 10px; margin: 5px">
                 <div>
                   <p> {{notfriend.displayName}} <button mat-button color="primary" style="float:right"
